@@ -1,7 +1,7 @@
 build
 
+# Modified by BW-Tech GmbH: keep generated Handlebars runtime assets deployable.
 # just sane ignores
-js/templates/*.handlebars.js
 
 node_modules
 .php_cs.cache
