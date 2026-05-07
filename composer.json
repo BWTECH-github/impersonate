@@ -1,8 +1,9 @@
 {
     "name": "owncloud/impersonate",
+    "description": "modified by BW-Tech GmbH for owncloud.online PHP 8.4 compatibility",
     "config": {
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true

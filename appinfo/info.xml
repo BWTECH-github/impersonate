@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- Modified by BW-Tech GmbH for owncloud.online PHP 8.4 compatibility. -->
 <info>
 	<id>impersonate</id>
 	<name>Impersonate</name>
@@ -9,9 +10,11 @@ The Impersonate application allows administrators, and group admins, to log in a
 Once Impersonate is installed, a new column will be available in the user management panel. Click on the icon next to the user that you want to impersonate and you will be logged in as that user. Your current session will be temporarily suspended, and you will see a notification at the top of the page reminding you that you’re impersonating another user. Once you’re finished, log out, and you will return to your previous user session.
 
 As a security measure, the application lets ownCloud administrators restrict the ability to impersonate users in specific groups. When enabled and configured, only a group’s administrator can impersonate members of their group. Administrators can find configuration options in the "User Authentication" section of the "Admin settings" panel.
+
+Modified by BW-Tech GmbH for owncloud.online PHP 8.4 compatibility.
 </description>
 	<licence>AGPL</licence>
-	<author>Jörn Friedrich Dreyer, Sujith Haridasan</author>
+	<author>Jörn Friedrich Dreyer, Sujith Haridasan, modified by BW-Tech GmbH</author>
 	<version>0.7.0</version>
         <types>
 	       <authentication/>
@@ -23,7 +26,8 @@ As a security measure, the application lets ownCloud administrators restrict the
 	<bugs>https://github.com/owncloud/impersonate/issues</bugs>
 	<repository type="git">http://github.com/owncloud/impersonate.git</repository>
 	<dependencies>
-                <owncloud min-version="11" max-version="11" />
+                <owncloud min-version="10.11" max-version="11.99" />
+                <php min-version="8.4" />
 	</dependencies>
 	<category>tools</category>
 	<screenshot>https://raw.githubusercontent.com/owncloud/screenshots/master/impersonate/impersonate.png</screenshot>
