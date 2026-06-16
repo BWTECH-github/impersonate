@@ -11,8 +11,10 @@ templates["addImpersonateIcon"] = template({"compiler":[8,">= 4.3.0"],"main":fun
 
   return "<td>\n	<a class=\"action permanent impersonate\" href=\"#\" title=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"displayText") || (depth0 != null ? lookupProperty(depth0,"displayText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"displayText","hash":{},"data":data,"loc":{"start":{"line":3,"column":57},"end":{"line":3,"column":72}}}) : helper)))
+    + "\" aria-label=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"displayText") || (depth0 != null ? lookupProperty(depth0,"displayText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"displayText","hash":{},"data":data,"loc":{"start":{"line":3,"column":57},"end":{"line":3,"column":72}}}) : helper)))
     + "\">\n		<img class=\"svg permanent action\" src=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"impersonate_src") || (depth0 != null ? lookupProperty(depth0,"impersonate_src") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"impersonate_src","hash":{},"data":data,"loc":{"start":{"line":4,"column":41},"end":{"line":4,"column":60}}}) : helper)))
-    + "\" />\n	</a>\n</td>\n";
+    + "\" alt=\"\" />\n	</a>\n</td>\n";
 },"useData":true});
 })();
