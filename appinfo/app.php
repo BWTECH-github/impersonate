@@ -22,6 +22,9 @@ $eventDispatcher->addListener(
 		\OCP\Util::addScript('impersonate', 'impersonate');
 		\OCP\Util::addScript('impersonate', 'templates/addImpersonateIcon.handlebars');
 		\OCP\Util::addScript('impersonate', 'templates/removeImpersonateIcon.handlebars');
+		// WCAG 2.4.7: Stylesheet auch auf der Benutzerverwaltung laden (ohne aktive
+		// Impersonation), damit der :focus-Stil des Impersonate-Icons dort greift
+		\OCP\Util::addStyle('impersonate', 'impersonate');
 	}
 );
 /** @phan-suppress-next-line PhanUndeclaredClassMethod */
