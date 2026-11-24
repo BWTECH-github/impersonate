@@ -1,33 +1,45 @@
+/**
+ * Karte „Als Benutzer anmelden“ (Verwaltung › Nutzer-Authentifizierung): Die Wahl wirkt sofort,
+ * die Rückmeldung gibt der Kern (OC.AppConfig). Die Gruppenliste gilt nur bei der dritten Wahl;
+ * bei den anderen steht am Server eine leere Liste, damit nichts Altes weiterwirkt.
+ */
 $(document).ready(function () {
-	$("#impersonateNoGroupAdmins").change(function () {
-		$("#selectIncludedGroups").addClass('hidden');
-		OC.AppConfig.setValue('impersonate', 'impersonate_all_groupadmins', 'false');
-		OC.AppConfig.setValue('impersonate', 'impersonate_include_groups', 'false');
-		OC.AppConfig.setValue('impersonate', 'impersonate_include_groups_list', JSON.stringify([]));
+	var $gruppen = $('#includedGroups');
+	var $block = $('#selectIncludedGroups');
+
+	function setzen(schluessel, wert) {
+		OC.AppConfig.setValue('impersonate', schluessel, wert);
+	}
+
+	function gewaehlteGruppen() {
+		var wert = $gruppen.val();
+		return wert ? wert.split('|') : [];
+	}
+
+	$('#impersonateNoGroupAdmins').on('change', function () {
+		$block.addClass('hidden');
+		setzen('impersonate_all_groupadmins', 'false');
+		setzen('impersonate_include_groups', 'false');
+		setzen('impersonate_include_groups_list', JSON.stringify([]));
 	});
 
-	$("#impersonateIncludeGroups").change(function () {
-		$("#selectIncludedGroups").removeClass('hidden');
-		var val = $("#impersonateIncludeGroups").is(":checked");
-		OC.AppConfig.setValue('impersonate', 'impersonate_include_groups', val);
-		OC.AppConfig.setValue('impersonate', 'impersonate_all_groupadmins', 'false');
+	$('#impersonateAllGroupAdmins').on('change', function () {
+		$block.addClass('hidden');
+		setzen('impersonate_all_groupadmins', 'true');
+		setzen('impersonate_include_groups', 'false');
+		setzen('impersonate_include_groups_list', JSON.stringify([]));
 	});
 
-	$("#impersonateAllGroupAdmins").change(function () {
-		var val = $("#impersonateAllGroupAdmins").is(":checked");
-		$("#selectIncludedGroups").addClass('hidden');
-		OC.AppConfig.setValue('impersonate', 'impersonate_all_groupadmins', val);
-		OC.AppConfig.setValue('impersonate', 'impersonate_include_groups', 'false');
-		OC.AppConfig.setValue('impersonate', 'impersonate_include_groups_list', JSON.stringify([]));
+	// Die Auswahl bleibt im Feld stehen; zurück bei dieser Wahl gilt sie wieder
+	$('#impersonateIncludeGroups').on('change', function () {
+		$block.removeClass('hidden');
+		setzen('impersonate_all_groupadmins', 'false');
+		setzen('impersonate_include_groups', 'true');
+		setzen('impersonate_include_groups_list', JSON.stringify(gewaehlteGruppen()));
 	});
 
-	$('#includedGroups').each(function (index, element) {
-		OC.Settings.setupGroupsSelect($(element));
-		$(element).change(function(ev) {
-			var groups = ev.val || [];
-			groups = JSON.stringify(groups);
-			OC.AppConfig.setValue('impersonate', $(this).attr('name'), groups);
-		});
+	OC.Settings.setupGroupsSelect($gruppen);
+	$gruppen.on('change', function (ev) {
+		setzen('impersonate_include_groups_list', JSON.stringify(ev.val || []));
 	});
 });
-

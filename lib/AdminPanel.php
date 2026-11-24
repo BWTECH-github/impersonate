@@ -21,12 +21,28 @@
 
 namespace OCA\Impersonate;
 
+use OCP\IConfig;
 use OCP\Settings\ISettings;
 use OCP\Template;
 
 class AdminPanel implements ISettings {
+	/** @var IConfig */
+	private $config;
+
+	public function __construct(IConfig $config) {
+		$this->config = $config;
+	}
+
 	public function getPanel() {
+		// Reihenfolge wie im Server (controller/settingscontroller.php): „alle Gruppenadministratoren“
+		// geht der Gruppenliste vor
+		$alle = $this->config->getAppValue('impersonate', 'impersonate_all_groupadmins', 'false') !== 'false';
+		$gruppen = $this->config->getAppValue('impersonate', 'impersonate_include_groups', 'false') !== 'false';
+		$liste = \json_decode($this->config->getAppValue('impersonate', 'impersonate_include_groups_list', '[]'), true);
+
 		$t = new Template('impersonate', 'settings-admin');
+		$t->assign('mode', $alle ? 'all' : ($gruppen ? 'groups' : 'admins'));
+		$t->assign('groups', \is_array($liste) ? \implode('|', $liste) : '');
 		return $t;
 	}
 

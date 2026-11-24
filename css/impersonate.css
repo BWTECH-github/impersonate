@@ -1,28 +1,42 @@
-#impersonate-notification {
-	display: inline-block;
-	background-color: #fc4;
-	margin: 0 auto;
-	max-width: 60%;
-	z-index: 8000;
-	border: 0;
-	padding: 1px 8px;
-	position: relative;
-	top: 0;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	opacity: .9;
-	margin-right: 2px;
-	vertical-align: top;
+/*
+ * Hinweisleiste „Angemeldet als …“ unter der Kopfleiste (js/impersonate_logout.js).
+ * Warnfarben: die Sitzung gehört gerade einem anderen Konto – „etwas ist anders als sonst“.
+ */
+.impersonate-leiste {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--oco-space-1) var(--oco-space-4);
+	box-sizing: border-box;
+	padding: 10px 24px;
+	border-bottom: 1px solid var(--oco-warn-border);
+	background: var(--oco-warn-bg);
+	color: var(--oco-warn-ink);
+	font: 500 13px/1.4 var(--oco-font-text);
 }
 
-#notification {
-	margin-left: 2px;
+.impersonate-leiste p {
+	margin: 0;
+	overflow-wrap: anywhere;
 }
 
-/* WCAG 2.4.7: sichtbarer Tastaturfokus fuer den icon-only Impersonate-Link,
-   unabhaengig vom Core-/Theme-Default (mind. 3:1 ueber currentColor). */
-.impersonate.action:focus,
-.impersonate.action:focus-visible {
-	outline: 2px solid currentColor;
-	outline-offset: 2px;
+.impersonate-leiste a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 24px;
+	color: inherit;
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+	.impersonate-leiste {
+		padding: 8px 14px;
+	}
+}
+
+/* Eintrag im Zeilenmenü der Benutzerverwaltung (js/impersonate.js): Symbol und Text mit der
+   Lücke der Menüs (MASSSTAB 3.5); der Rest kommt vom Kern (.oco-row-menu-action). */
+#body-settings.oco-shell .oco-row-menu .impersonate-aktion {
+	gap: 10px;
 }

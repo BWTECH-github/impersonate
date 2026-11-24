@@ -2,7 +2,6 @@ SHELL := /bin/bash
 
 COMPOSER_BIN := $(shell command -v composer 2> /dev/null)
 
-HANDLEBARS=$(CURDIR)/node_modules/handlebars/bin/handlebars
 appname=$(notdir $(CURDIR))
 
 
@@ -14,13 +13,6 @@ private_key=$(HOME)/.owncloud/certificates/$(appname).key
 certificate=$(HOME)/.owncloud/certificates/$(appname).crt
 sign=php -f $(occ) integrity:sign-app --privateKey="$(private_key)" --certificate="$(certificate)"
 sign_skip_msg="Skipping signing, either no key and certificate found in $(private_key) and $(certificate) or occ can not be found at $(occ)"
-template_src=$(wildcard js/templates/*.handlebars)
-app_namespace=Impersonate
-js_namespace=OCA.$(app_namespace)
-NODE_PREFIX=$(shell pwd)
-
-NPM := $(shell command -v npm 2> /dev/null)
-
 ifneq (,$(wildcard $(private_key)))
 ifneq (,$(wildcard $(certificate)))
 ifneq (,$(wildcard $(occ)))
@@ -48,26 +40,12 @@ help: ## Show this help message
 #
 .PHONY: dist
 dist: ## Build distribution and create tar file impersonate.tar.gz
-dist: build-dep js-templates build-src
-
-%.js: $(template_src)
-		$(HANDLEBARS) -n "$(js_namespace)" $* -f $@
+dist: build-src
 
 # Installs dependencies and does any build actions needed for the app to run in CI
 .PHONY: ci
-ci: vendor build-dep js-templates
+ci: vendor
 	@echo dependencies and build actions for CI are completed
-
-.PHONY: build-dep
-build-dep: ## fetch all dependencies
-build-dep: node_modules
-
-node_modules: package.json package-lock.json
-		$(NPM) install --prefix=$(NODE_PREFIX) && touch $@
-
-PHONY: js-templates
-js-templates: ## build templates for frontend
-js-templates: $(addsuffix .js, $(template_src))
 
 # Installs and updates the composer dependencies.
 .PHONY: composer
@@ -75,9 +53,7 @@ composer:
 	composer install --prefer-dist
 	composer update --prefer-dist
 
-# Fetches the PHP and JS dependencies and compiles the JS. If no composer.json
-# is present, the composer step is skipped, if no package.json or js/package.json
-# is present, the npm step is skipped
+# Fetches the PHP dependencies. If no composer.json is present, the composer step is skipped
 .PHONY: build
 build:
 ifneq (,$(wildcard $(CURDIR)/composer.json))
@@ -92,10 +68,6 @@ clean: clean-build clean-deps
 clean-deps:
 	rm -Rf vendor
 	rm -Rf vendor-bin/**/vendor vendor-bin/**/composer.lock
-
-.PHONY: clean-templates
-clean-templates:
-		rm -f $(addsuffix .js, $(template_src))
 
 .PHONY: build-src
 
@@ -117,7 +89,7 @@ build-src: ## Build source package
 		CHANGELOG.md \
 		templates \
 		build/$(appname)
-	rm -Rf build/$(appname)/js/templates/*.handlebars build/$(appname)/l10n/.tx
+	rm -Rf build/$(appname)/l10n/.tx
 ifdef CAN_SIGN
 	$(sign) --path="$(CURDIR)/build/$(appname)"
 else
@@ -128,8 +100,6 @@ endif
 .PHONY: clean-build
 clean-build:
 		rm -fR build
-		rm -f $(addsuffix .js, $(template_src))
-		rm -fr $(NODE_PREFIX)/node_modules
 
 
 ##---------------------

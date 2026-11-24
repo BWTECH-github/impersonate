@@ -7,7 +7,7 @@
 	<description>
 The Impersonate application allows administrators, and group admins, to log in as another user within an owncloud.online instance. It provides a helpdesk-like experience and can be useful to help users with configuration issues, to get a better understanding of what they see when they use their owncloud.online account, or to perform actions in legacy accounts.
 
-Once Impersonate is installed, a new column will be available in the user management panel. Click on the icon next to the user that you want to impersonate and you will be logged in as that user. Your current session will be temporarily suspended, and you will see a notification at the top of the page reminding you that you’re impersonating another user. Once you’re finished, log out, and you will return to your previous user session.
+Once Impersonate is installed, the menu of each user in the user management panel offers "Impersonate". Choose it and you will be logged in as that user. Your current session will be temporarily suspended, and a bar below the header reminds you that you’re impersonating another user. Once you’re finished, choose "Back to my account" or log out, and you will return to your previous user session.
 
 As a security measure, the application lets owncloud.online administrators restrict the ability to impersonate users in specific groups. When enabled and configured, only a group’s administrator can impersonate members of their group. Administrators can find configuration options in the "User Authentication" section of the "Admin settings" panel.
 
@@ -15,7 +15,7 @@ Modified by BW-Tech GmbH for owncloud.online PHP 8.4 compatibility.
 </description>
 	<licence>AGPL</licence>
 	<author>Jörn Friedrich Dreyer, Sujith Haridasan, modified by BW-Tech GmbH</author>
-	<version>0.7.1</version>
+	<version>1.0.0</version>
         <types>
 	       <authentication/>
         </types>
@@ -26,7 +26,7 @@ Modified by BW-Tech GmbH for owncloud.online PHP 8.4 compatibility.
 	<bugs>https://github.com/BWTECH-github/impersonate/issues</bugs>
 	<repository type="git">https://github.com/BWTECH-github/impersonate.git</repository>
 	<dependencies>
-                <owncloud min-version="10.11" max-version="11.99" />
+                <owncloud min-version="11.1" max-version="11.99" />
                 <php min-version="8.4" />
 	</dependencies>
 	<category>tools</category>

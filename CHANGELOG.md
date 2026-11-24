@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.0] - 2026-11-24
+
+Eigene Versionslinie für owncloud.online 11.1 (Redesign), setzt 11.1 voraus.
+
+### Changed
+
+- „Als Benutzer anmelden“ steht im Menü „…“ jeder Zeile der Benutzerverwaltung statt in einer
+  eigenen Spalte. Gruppenadministratoren sehen den Eintrag nur dort, wo sie ihn nutzen dürfen;
+  Konten, die sich nie angemeldet haben, bekommen ihn nicht.
+- Hinweisleiste unter der Kopfleiste, solange du als anderer Benutzer angemeldet bist, mit
+  „Zurück zu meinem Konto“.
+- Einstellungskarte im Stil von 11.1: Auswahl als Optionsgruppe, Gruppenauswahl eingerückt unter
+  der dritten Wahl; wer zur dritten Wahl zurückkehrt, bekommt die Gruppen im Feld wieder.
+- Fehler beim Anmelden als anderer Benutzer werden immer gemeldet; klarere deutsche Texte.
+
 ## [0.7.1] - 2026-08-13
 
 ### Changed

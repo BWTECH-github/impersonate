@@ -6,11 +6,11 @@ Support-Anfragen, bei denen die Beschreibung nicht weiterhilft.
 
 ## Wie es benutzt wird
 
-Nach der Installation erscheint in der Benutzerverwaltung eine zusätzliche
-Spalte. Ein Klick auf das Symbol neben einem Konto meldet Sie als dieses Konto
-an. Ihre eigene Sitzung bleibt in der Zwischenzeit bestehen; oben auf der Seite
-steht durchgehend ein Hinweis, dass Sie gerade in fremdem Namen unterwegs sind.
-Abmelden bringt Sie in Ihre eigene Sitzung zurück.
+Nach der Installation steht in der Benutzerverwaltung im Menü „…“ jeder Zeile der
+Eintrag „Als Benutzer anmelden“. Er meldet Sie als dieses Konto an. Ihre eigene
+Sitzung bleibt in der Zwischenzeit bestehen; unter der Kopfleiste steht durchgehend
+ein Hinweis, dass Sie gerade in fremdem Namen unterwegs sind. „Zurück zu meinem
+Konto“ im Hinweis oder Abmelden bringt Sie in Ihre eigene Sitzung zurück.
 
 ## Was das bedeutet
 
@@ -24,7 +24,7 @@ Gruppen-Administrator.
 
 ## Voraussetzungen
 
-* owncloud.online 11.x
+* owncloud.online ab 11.1
 * PHP 8.4
 
 ## Installation
@@ -40,22 +40,22 @@ sudo -u www-data php8.4 ../occ app:enable impersonate
 
 ## Einstellungen
 
-Einstellungen → Benutzerauthentifizierung. Dort lässt sich die Übernahme auf
-bestimmte Gruppen begrenzen: Ist die Einschränkung aktiv, darf ein
-Gruppen-Administrator nur Mitglieder der eigenen Gruppe übernehmen.
+Einstellungen → Nutzer-Authentifizierung, Karte „Als Benutzer anmelden“. Dort steht,
+wer andere Konten übernehmen darf: nur Administratoren, auch alle
+Gruppen-Administratoren (für Mitglieder ihrer Gruppen) oder auch
+Gruppen-Administratoren ausgewählter Gruppen (für Mitglieder dieser Gruppen). Die
+Wahl wirkt sofort.
 
 ## Bekannte Grenze
 
-Ein Konto, das sich **noch nie angemeldet hat**, lässt sich nicht übernehmen:
-Das Dateisystem dieses Kontos wird erst bei der ersten echten Anmeldung
-angelegt. Sie landen dann auf einer Fehlerseite und kommen nur durch Löschen des
-Sitzungscookies wieder heraus. Lassen Sie das Konto sich einmal selbst anmelden.
+Ein Konto, das sich **noch nie angemeldet hat**, lässt sich nicht übernehmen: Das
+Dateisystem dieses Kontos wird erst bei der ersten echten Anmeldung angelegt. Das
+Menü bietet den Eintrag für solche Konten deshalb nicht an. Lassen Sie das Konto
+sich einmal selbst anmelden.
 
 ## Entwicklung
 
 ```bash
-make build-dep     # Abhängigkeiten
-make js-templates  # Handlebars-Vorlagen übersetzen
 make dist          # Paket bauen
 ```
 

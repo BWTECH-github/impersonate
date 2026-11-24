@@ -1,13 +1,15 @@
 { "translations": {
-    "Can not impersonate. Please contact your server administrator to allow impersonation." : "Kann den Benutzer nicht imitieren. Bitte kontaktieren sie den Server Administrator um die Imitation zu erlauben.",
-    "Can not impersonate" : "Benutzer Imitation fehlgeschlagen",
+    "Can not impersonate. Please contact your server administrator to allow impersonation." : "Anmelden als anderer Benutzer ist nicht erlaubt. Bitte wenden Sie sich an Ihre Administration.",
+    "Can not impersonate" : "Anmelden als dieser Benutzer ist nicht möglich",
     "Unexpected error occurred" : "Ein unerwarteter Fehler ist aufgetreten",
-    "Impersonate" : "Als imitierter Benutzer ausgeben",
+    "Impersonate" : "Als Benutzer anmelden",
     "Error" : "Fehler",
-    "Logged in as {currentUser}" : "Eingeloggt als {currentUser}",
-    "Impersonate Settings" : "Benutzer Imitierungs-Einstellungen",
-    "Only an administrator is allowed to impersonate users" : "Nur der Administrator darf sich als andere Benutzer ausgeben.",
-    "Allow all group admins to impersonate users within the groups they are admins of" : "Erlauben Sie allen Gruppenadministratoren, die Rolle von Benutzern innerhalb der Gruppen anzunehmen (imitieren), für die sie Administratoren sind.",
-    "Allow group admins of specific groups to impersonate the users within those groups" : "Erlauben Sie Gruppenadministratoren bestimmter Gruppen, die Rolle von Benutzern dieser Gruppe anzunehmen (imitieren)."
+    "Logged in as {currentUser}" : "Angemeldet als {currentUser}",
+    "Only an administrator is allowed to impersonate users" : "Nur Administratoren",
+    "Allow all group admins to impersonate users within the groups they are admins of" : "Auch Gruppenadministratoren, für Mitglieder ihrer Gruppen",
+    "Allow group admins of specific groups to impersonate the users within those groups" : "Auch Gruppenadministratoren ausgewählter Gruppen, für Mitglieder dieser Gruppen",
+    "Who may log in as another user" : "Wer darf sich als anderer Benutzer anmelden",
+    "Groups" : "Gruppen",
+    "Back to my account" : "Zurück zu meinem Konto"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

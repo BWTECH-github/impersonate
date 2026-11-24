@@ -1,6 +1,5 @@
 build
 
-# Modified by BW-Tech GmbH: keep generated Handlebars runtime assets deployable.
 # just sane ignores
 
 node_modules

@@ -9,21 +9,17 @@
  * @copyright Jörn Friedrich Dreyer 2015
  */
 
+// Hinweisleiste unter der Kopfleiste, solange jemand als anderer Benutzer angemeldet ist
 if (\OC::$server->getSession()->get('impersonator') !== null) {
 	\OCP\Util::addScript('impersonate', 'impersonate_logout');
-	\OCP\Util::addScript('impersonate', 'templates/impersonateNotification.handlebars');
 	\OCP\Util::addStyle('impersonate', 'impersonate');
 }
-// --- register js for user management------------------------------------------
+// Benutzerverwaltung: Eintrag im Zeilenmenü (die Gestaltung liefert im Wesentlichen der Kern)
 $eventDispatcher = \OC::$server->getEventDispatcher();
 $eventDispatcher->addListener(
 	'OC\Settings\Users::loadAdditionalScripts',
 	function () {
 		\OCP\Util::addScript('impersonate', 'impersonate');
-		\OCP\Util::addScript('impersonate', 'templates/addImpersonateIcon.handlebars');
-		\OCP\Util::addScript('impersonate', 'templates/removeImpersonateIcon.handlebars');
-		// WCAG 2.4.7: Stylesheet auch auf der Benutzerverwaltung laden (ohne aktive
-		// Impersonation), damit der :focus-Stil des Impersonate-Icons dort greift
 		\OCP\Util::addStyle('impersonate', 'impersonate');
 	}
 );

@@ -1,0 +1,10 @@
+/*
+ * Karte „Als Benutzer anmelden“: Die Gruppenauswahl hängt eingerückt an der dritten Wahl
+ * (Einrückung und Linie zeichnet der Kern). Hier nur ihre Breite – wie die Gruppenfelder des
+ * Kerns 400 px, auf schmalen Fenstern die Zeile.
+ */
+#body-settings.oco-shell #app-content #selectIncludedGroups .select2-container {
+	display: block;
+	width: 100%;
+	max-width: 400px;
+}
