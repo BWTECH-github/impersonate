@@ -132,7 +132,8 @@ class SettingsController extends Controller {
 	 * @return JSONResponse
 	 */
 	private function impersonateUser($impersonator, $target, $user) {
-		$this->logger->info("User $impersonator impersonated user $target", ['app' => 'impersonate']);
+		// warning statt info: Die Voreinstellung (loglevel 2) schreibt info gar nicht
+		$this->logger->warning("User $impersonator impersonated user $target", ['app' => 'impersonate']);
 		$this->util->switchUser($user, $impersonator);
 		$startEvent = new GenericEvent(null, ['impersonator' => $impersonator, 'targetUser' => $target]);
 		$this->eventDispatcher->dispatch($startEvent, 'user.afterimpersonate');
@@ -206,7 +207,18 @@ class SettingsController extends Controller {
 			if ($this->groupManager->isAdmin($impersonator)) {
 				return $this->impersonateUser($impersonator, $target, $user);
 			}
-			
+
+			// Ein Gruppenadministrator darf keinen anderen Gruppenadministrator übernehmen:
+			// Als dieser verwaltete er sonst auch dessen weitere Gruppen.
+			if ($this->subAdmin->isSubAdmin($user)) {
+				$this->logger->warning("Can not allow user \"{$impersonator}\" trying to impersonate \"{$target}\" because \"{$target}\" is a group administrator", ['app' => 'impersonate']);
+				$this->session->remove('impersonator');
+				return new JSONResponse([
+					'error' => 'cannotImpersonate',
+					'message' => $this->l->t('Can not impersonate'),
+				], http::STATUS_NOT_FOUND);
+			}
+
 			$includedGroups = $this->config->getValue('impersonate', 'impersonate_include_groups_list', '');
 			$allowSubAdminsImpersonate = $this->config->getValue('impersonate', 'impersonate_all_groupadmins', "false");
 			if ($allowSubAdminsImpersonate === "true") {

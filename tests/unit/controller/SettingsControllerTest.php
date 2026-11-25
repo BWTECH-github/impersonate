@@ -624,6 +624,61 @@ class SettingsControllerTest extends TestCase {
 		);
 	}
 
+	public function groupAdminTargetProvider() {
+		return [
+			'all group administrators' => ['true', ''],
+			'group list' => ['false', \json_encode(['group1'])],
+		];
+	}
+
+	/**
+	 * Ein Gruppenadministrator darf keinen anderen Gruppenadministrator übernehmen,
+	 * auch wenn das Ziel in einer seiner Gruppen ist (sonst verwaltete er dessen Gruppen).
+	 *
+	 * @dataProvider groupAdminTargetProvider
+	 */
+	public function testGroupAdminCannotImpersonateOtherGroupAdmin($allGroupAdmins, $groupList) {
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('foo');
+		$this->userSession->method('getUser')->willReturn($user);
+
+		$targetUser = $this->createMock(IUser::class);
+		$targetUser->method('getUID')->willReturn('baro');
+		$targetUser->method('getLastLogin')->willReturn(1);
+		$this->userManager->method('get')->willReturn($targetUser);
+
+		$this->groupManger->method('isAdmin')->willReturn(false);
+		$group1 = $this->createMock(IGroup::class);
+		$group1->method('getGID')->willReturn('group1');
+		$this->groupManger->method('get')->willReturn($group1);
+		$this->subAdmin->method('getSubAdminsGroups')->willReturn([$group1]);
+		$this->subAdmin->method('isSubAdminofGroup')->willReturn(true);
+		$this->subAdmin->method('isSubAdmin')->willReturnMap([
+			[$user, true],
+			[$targetUser, true],
+		]);
+		$this->groupManger->method('isInGroup')->willReturn(true);
+
+		$this->config
+			->method('getValue')
+			->will($this->returnValueMap([
+				['impersonate', 'enabled', "no", "yes"],
+				['impersonate', 'impersonate_include_groups_list', "", $groupList],
+				['impersonate', 'impersonate_all_groupadmins', "false", $allGroupAdmins]
+			]));
+
+		$this->util->expects($this->never())->method('switchUser');
+		$this->session->expects($this->once())->method('remove')->with('impersonator');
+
+		$this->assertEquals(
+			new JSONResponse([
+				'error' => 'cannotImpersonate',
+				'message' => $this->l->t('Can not impersonate'),
+			], http::STATUS_NOT_FOUND),
+			$this->controller->impersonate('baro')
+		);
+	}
+
 	public function testImpersonateAppDisabled() {
 		$this->config
 			->method('getValue')

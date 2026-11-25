@@ -99,7 +99,8 @@ class LogoutController extends Controller {
 			$currentUser = $currentUser->getUID();
 			$this->util->switchUser($impersonatorUser, null);
 			$stopEvent = new GenericEvent(null, ['impersonator' => $impersonator, 'targetUser' => $currentUser]);
-			$this->logger->info("Switching back to previous user $impersonator", ['app' => 'impersonate']);
+			// warning statt info: Die Voreinstellung (loglevel 2) schreibt info gar nicht
+			$this->logger->warning("User $impersonator stopped impersonating user $currentUser", ['app' => 'impersonate']);
 			$event->setArgument('cancel', true);
 			$this->eventDispatcher->dispatch($stopEvent, 'user.afterimpersonatelogout');
 		}

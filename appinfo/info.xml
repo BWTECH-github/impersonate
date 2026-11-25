@@ -15,7 +15,7 @@ Modified by BW-Tech GmbH for owncloud.online PHP 8.4 compatibility.
 </description>
 	<licence>AGPL</licence>
 	<author>Jörn Friedrich Dreyer, Sujith Haridasan, modified by BW-Tech GmbH</author>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
         <types>
 	       <authentication/>
         </types>

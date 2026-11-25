@@ -46,8 +46,9 @@
 	/**
 	 * @param {Array} antwort [freigegebene Gruppen, Einschränkung auf Gruppen an, alle
 	 *        Gruppenadministratoren, ist Administrator, ist Gruppenadministrator]
+	 * @param {Object} user Zeilendaten der Benutzerliste (subadmin = verwaltete Gruppen)
 	 */
-	function darf(antwort, $tr) {
+	function darf(antwort, $tr, user) {
 		if (String($tr.data('uid')) === OC.getCurrentUser().uid) {
 			return false;
 		}
@@ -55,6 +56,10 @@
 			return true;
 		}
 		if (!wahr(antwort[4])) {
+			return false;
+		}
+		// Andere Gruppenadministratoren lehnt der Server ab
+		if (user && !_.isEmpty(user.subadmin)) {
 			return false;
 		}
 		if (wahr(antwort[2])) {
@@ -133,7 +138,7 @@
 					// lehnt ab, also gar nicht erst anbieten
 					var nie = user && user.lastLogin === 0;
 					daten.then(function (antwort) {
-						$tr.attr('data-impersonate', !nie && darf(antwort, $tr) ? '1' : '0');
+						$tr.attr('data-impersonate', !nie && darf(antwort, $tr, user) ? '1' : '0');
 						ergaenzen($tr[0]);
 					});
 				}
